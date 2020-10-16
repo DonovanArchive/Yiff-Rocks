@@ -1,0 +1,32 @@
+{
+  "name": "yiff-rocks",
+  "version": "1.0.0",
+  "description": "A module for the yiff.rocks url shortener.",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "scripts": {
+    "build": "rm -rf build && tsc && echo Build Finished"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FurryBotCo/Yiff-Rocks.git"
+  },
+  "keywords": [
+    "yiff",
+    "rocks",
+    "yiff.rocks",
+    "yiff-rocks",
+    "url",
+    "shortener",
+    "url-shortener"
+  ],
+  "author": "Donovan_DMC <dwddaniels262@gmail.com> (https://furry.cool)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FurryBotCo/Yiff-Rocks/issues"
+  },
+  "homepage": "https://github.com/FurryBotCo/Yiff-Rocks#readme",
+  "devDependencies": {
+    "@types/node": "^14.11.8"
+  }
+}
