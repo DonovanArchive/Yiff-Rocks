@@ -66,6 +66,12 @@ export interface Result {
 	 */
 	createdAt: string;
 	/**
+	 * The time this short url was modified at.
+	 * @type {(string | null)}
+	 * @memberof Result
+	 */
+	modifiedAt: string | null;
+	/**
 	 * The url this short url leads to.
 	 * @type {string}
 	 * @memberof Result
@@ -77,6 +83,16 @@ export interface Result {
 	 * @memberof Result
 	 */
 	pos: number;
+	/**
+	 * The management code of this short url. This will only be present when creating NEW shortened urls.
+	 * 
+	 * This will only be returned once, so save it if you plan on using it.
+	 * 
+	 * This can be used to delete, and modify the shortened url.
+	 * @type {(string | null)}
+	 * @memberof Result
+	 */
+	managementCode: string | null;
 	/**
 	 * The credit for creating this short url.
 	 * @type {string}

@@ -1,6 +1,6 @@
 {
   "name": "yiff-rocks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A module for the yiff.rocks url shortener.",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
@@ -27,6 +27,6 @@
   },
   "homepage": "https://github.com/FurryBotCo/Yiff-Rocks#readme",
   "devDependencies": {
-    "@types/node": "^14.11.8"
+    "@types/node": "^14.14.22"
   }
 }

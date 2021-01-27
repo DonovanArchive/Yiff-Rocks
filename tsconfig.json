@@ -16,8 +16,10 @@
             "./src/util/@types"
         ],
         "inlineSourceMap": true,
-        "strictNullChecks": true,
-        "declaration": true
+        "strict": true,
+        "declaration": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": false
     },
     "include": [
         "**/*"
