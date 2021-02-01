@@ -139,7 +139,7 @@ export class YiffRocks {
 					method: "POST",
 					hostname: "yiff.rocks",
 					protocol: "https:",
-					path: `/create${editable === false ? "editable=false" : ""}`,
+					path: `/create${editable === false ? "?editable=false" : ""}`,
 					headers: {
 						"User-Agent": this.userAgent,
 						"Content-Type": "application/json"

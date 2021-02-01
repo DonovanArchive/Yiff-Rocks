@@ -1,11 +1,12 @@
 {
   "name": "yiff-rocks",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "A module for the yiff.rocks url shortener.",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "scripts": {
-    "build": "rm -rf build && tsc && echo Build Finished"
+    "prepare": "rm -rf build && tsc && echo Build Finished",
+    "build": "npm run prepare"
   },
   "repository": {
     "type": "git",
