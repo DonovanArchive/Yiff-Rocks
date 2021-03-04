@@ -3,7 +3,15 @@ A module for the yiff.rocks url shortener.
 
 This module is used for shortening urls using <a href="https://yiff.rocks">yiff.rocks</a>.
 
-## How To Use:
+## How To Use
+#### CLI
+(when installed globally, `npm i -g yiff-rocks`)
+```
+shorten <url> --credit [credit] --code [code]
+```
+Credit & code are not required.
+
+#### Module
 ```js
 const YiffRocks = require("yiff-rocks");
 
@@ -13,7 +21,8 @@ const YiffRocks = require("yiff-rocks");
 // Warning: Image is NSFW
 // This function can take between 1 and 3 parameters
 // 1 - URL
-// 2 - Credit (You can provide your name here for it to be tracked that you created the short url)// 3 - Code (Override the random generated code, will throw an error if it's already used)
+// 2 - Credit (You can provide your name here for it to be tracked that you created the short url)
+// 3 - Code (Override the random generated code, will throw an error if it's already used)
 
 YiffRocks.create(
 	"https://yiff.media/V2/furry/yiff/gay/2c9249179940a575c45d9835f0d5affe.jpg" // URL
@@ -34,7 +43,7 @@ YiffRocks.create(
 // Warning: Image is NSFW
 // this function takes 1 parameter
 // 1 - URL
-YiffRocks.create(
+YiffRocks.getByURL(
 	"https://yiff.media/V2/furry/yiff/gay/2c9249179940a575c45d9835f0d5affe.jpg"
 );
 
@@ -43,7 +52,7 @@ YiffRocks.create(
 // This one will throw an error if the code is not used
 // this function takes 1 parameter
 // 1 - Code
-YiffRocks.create(
+YiffRocks.getByCode(
 	"OwOWhatsThis"
 );
 ```
