@@ -1,4 +1,6 @@
 # Yiff-Rocks
+![](https://nodei.co/npm/yiff-rocks.png)
+
 A module for the yiff.rocks url shortener.
 
 This module is used for shortening urls using <a href="https://yiff.rocks">yiff.rocks</a>.
