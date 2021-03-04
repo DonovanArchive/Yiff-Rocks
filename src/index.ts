@@ -78,7 +78,7 @@ export class ShortURL implements Result {
 	 */
 	async delete() {
 		if (this.managementCode === null) throw new TypeError("This short url cannot be deleted.");
-		return YiffRocks.deleteShortURL(this.code, this.managementCode!)
+		return YiffRocks.deleteShortURL(this.code, this.managementCode!);
 	}
 
 	/**
@@ -99,9 +99,13 @@ export class ShortURL implements Result {
 }
 
 export class APIError extends Error {
-	constructor(message: string, obj: object) {
-		super(`${message}: ${JSON.stringify(obj, null, "\t")}`);
+	code: number;
+	obj: object | string;
+	constructor(message: string, obj: object | string, code: number) {
+		super(`${message}: ${typeof obj === "string" ? obj : JSON.stringify(obj, null, "\t")}`);
 		this.name = "APIError";
+		this.code = code;
+		this.obj = obj;
 	}
 }
 
@@ -152,7 +156,7 @@ export class YiffRocks {
 						.on("data", (d) => data.push(d))
 						.on("end", () => {
 							const v = JSON.parse(Buffer.concat(data).toString());
-							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode} ${res.statusMessage}`, v.error));
+							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode} ${res.statusMessage}`, v.error, res.statusCode!));
 							else return a(new ShortURL(v.data));
 						});
 				});
@@ -206,7 +210,7 @@ export class YiffRocks {
 						.on("data", (d) => data.push(d))
 						.on("end", () => {
 							const v = JSON.parse(Buffer.concat(data).toString());
-							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode} ${res.statusMessage}`, v.error));
+							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode} ${res.statusMessage}`, v.error, res.statusCode!));
 							else return a(new ShortURL(v.data));
 						});
 				})
@@ -241,8 +245,10 @@ export class YiffRocks {
 						.on("error", (err) => b(err))
 						.on("data", (d) => data.push(d))
 						.on("end", () => {
-							const v = JSON.parse(Buffer.concat(data).toString());
-							if (res.statusCode !== 204) b(new APIError(`Non-204 No Content Response From API: ${res.statusCode} ${res.statusMessage}`, v.error));
+							if (res.statusCode !== 204) {
+								const v = JSON.parse(Buffer.concat(data).toString());
+								b(new APIError(`Non-204 No Content Response From API: ${res.statusCode} ${res.statusMessage}`, v.error, res.statusCode!));
+							}
 							else return a();
 						});
 				})
@@ -291,7 +297,7 @@ export class YiffRocks {
 						.on("data", (d) => data.push(d))
 						.on("end", () => {
 							const v = JSON.parse(Buffer.concat(data).toString());
-							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode} ${res.statusMessage}`, v.error));
+							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode} ${res.statusMessage}`, v.error, res.statusCode!));
 							else return a(new ShortURL(v.data));
 						});
 				});

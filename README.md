@@ -8,10 +8,19 @@ This module is used for shortening urls using <a href="https://yiff.rocks">yiff.
 ## How To Use
 #### CLI
 (when installed globally, `npm i -g yiff-rocks`)
-```
-shorten <url> --credit [credit] --code [code]
-```
-Credit & code are not required.
+`<>` = required
+`[]` = optional
+##### Create
+`shorten create <url> [--credit credit] [--code code]`
+
+##### Delete
+`shorten modify <short-code> <management-code> --delete`
+
+##### Edit
+`shorten modify <short-code> <management-code> --edit [--url <url>] [--credit <credit>]`
+
+##### Get
+`shorten get <url/code>`
 
 #### Module
 ```js
