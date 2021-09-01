@@ -4,52 +4,60 @@ import * as https from "https";
 export interface Result {
 	/**
 	 * The code of this short url.
+	 *
 	 * @type {string}
 	 * @memberof Result
 	 */
 	code: string;
 	/**
 	 * The time this short url was created at.
+	 *
 	 * @type {string}
 	 * @memberof Result
 	 */
 	createdAt: string;
 	/**
 	 * The time this short url was modified at.
+	 *
 	 * @type {(string | null)}
 	 * @memberof Result
 	 */
 	modifiedAt: string | null;
 	/**
 	 * The url this short url leads to.
+	 *
 	 * @type {string}
 	 * @memberof Result
 	 */
 	url: string;
 	/**
 	 * The position of this short url in creation order.
+	 *
 	 * @type {number}
 	 * @memberof Result
 	 */
 	pos: number;
 	/**
 	 * The management code of this short url. This will only be present when creating NEW shortened urls.
-	 * 
+	 *
 	 * This will only be returned once, so save it if you plan on using it.
-	 * 
+	 *
 	 * This can be used to delete, and modify the shortened url.
+	 *
 	 * @type {(string | null)}
 	 * @memberof Result
 	 */
 	managementCode: string | null;
 	/**
 	 * The credit for creating this short url.
+	 *
 	 * @type {string}
 	 * @memberof Result
 	 */
 	credit: string;
 	/**
 	 * The url this short url should be visited at.
+	 *
 	 * @type {string}
 	 * @memberof Result
 	 */
@@ -72,17 +80,19 @@ export class ShortURL implements Result {
 
 	/**
 	 * Delete an existing short url.
-	* @returns {Promise<void>}
+	 *
+	 * @returns {Promise<void>}
 	 * @memberof ShortURL
 	 * @example ShortURL.delete();
 	 */
 	async delete() {
 		if (this.managementCode === null) throw new TypeError("This short url cannot be deleted.");
-		return YiffRocks.deleteShortURL(this.code, this.managementCode!);
+		return YiffRocks.deleteShortURL(this.code, this.managementCode);
 	}
 
 	/**
 	 * Edit an existing short url.
+	 *
 	 * @param {object} update - The data to update
 	 * @param {string} [update.url] - The url to change to
 	 * @param {string} [update.credit] - The credit to change to
@@ -94,14 +104,14 @@ export class ShortURL implements Result {
 	 */
 	async edit(update: Parameters<typeof YiffRocks["editShortURL"]>[2]) {
 		if (this.managementCode === null) throw new TypeError("This short url cannot be modified.");
-		return YiffRocks.editShortURL(this.code, this.managementCode!, update);
+		return YiffRocks.editShortURL(this.code, this.managementCode, update);
 	}
 }
 
 export class APIError extends Error {
 	code: number;
-	obj: object | string;
-	constructor(message: string, obj: object | string, code: number) {
+	obj: unknown | string;
+	constructor(message: string, obj: unknown | string, code: number) {
 		super(`${message}: ${typeof obj === "string" ? obj : JSON.stringify(obj, null, "\t")}`);
 		this.name = "APIError";
 		this.code = code;
@@ -111,6 +121,7 @@ export class APIError extends Error {
 
 /**
  * The main class to access any methods.
+ *
  * @class YiffRocks
  * @prop {string} userAgent - The user agent used in requests.
  */
@@ -125,6 +136,7 @@ export class YiffRocks {
 
 	/**
 	 * Shorten a url.
+	 *
 	 * @static
 	 * @param {string} url - The url to shorten.
 	 * @param {string} [credit="Yiff-Rocks-Node-Module"] - The credit for shortening the url.
@@ -149,14 +161,14 @@ export class YiffRocks {
 						"Content-Type": "application/json"
 					}
 				}, (res) => {
-					const data: Buffer[] = [];
+					const data: Array<Buffer> = [];
 
 					res
 						.on("error", (err) => b(err))
 						.on("data", (d) => data.push(d))
 						.on("end", () => {
-							const v = JSON.parse(Buffer.concat(data).toString());
-							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode} ${res.statusMessage}`, v.error, res.statusCode!));
+							const v = JSON.parse(Buffer.concat(data).toString()) as { data: Result; error?: unknown; };
+							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode!} ${res.statusMessage!}`, v.error, res.statusCode!));
 							else return a(new ShortURL(v.data));
 						});
 				});
@@ -171,6 +183,7 @@ export class YiffRocks {
 
 	/**
 	 * Fetch shortened info for a url.
+	 *
 	 * @static
 	 * @param {string} url - The url to fetch info for.
 	 * @returns {Promise<ShortURL>}
@@ -185,6 +198,7 @@ export class YiffRocks {
 
 	/**
 	 * Fetch shortened info for a short code.
+	 *
 	 * @static
 	 * @param {string} code - The code to fetch info for.
 	 * @returns {Promise<ShortURL>}
@@ -203,14 +217,14 @@ export class YiffRocks {
 						"User-Agent": this.userAgent
 					}
 				}, (res) => {
-					const data: Buffer[] = [];
+					const data: Array<Buffer> = [];
 
 					res
 						.on("error", (err) => b(err))
 						.on("data", (d) => data.push(d))
 						.on("end", () => {
-							const v = JSON.parse(Buffer.concat(data).toString());
-							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode} ${res.statusMessage}`, v.error, res.statusCode!));
+							const v = JSON.parse(Buffer.concat(data).toString()) as { data: Result; error?: unknown; };
+							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode!} ${res.statusMessage!}`, v.error, res.statusCode!));
 							else return a(new ShortURL(v.data));
 						});
 				})
@@ -220,6 +234,7 @@ export class YiffRocks {
 
 	/**
 	 * Delete an existing short url.
+	 *
 	 * @param {string} code - The code of the short url to delete.
 	 * @param {string} managementCode - The management code for the short url. This is returned when the short url is created.
 	 * @returns {Promise<void>}
@@ -239,17 +254,16 @@ export class YiffRocks {
 						"Authorization": managementCode
 					}
 				}, (res) => {
-					const data: Buffer[] = [];
+					const data: Array<Buffer> = [];
 
 					res
 						.on("error", (err) => b(err))
 						.on("data", (d) => data.push(d))
 						.on("end", () => {
 							if (res.statusCode !== 204) {
-								const v = JSON.parse(Buffer.concat(data).toString());
-								b(new APIError(`Non-204 No Content Response From API: ${res.statusCode} ${res.statusMessage}`, v.error, res.statusCode!));
-							}
-							else return a();
+								const v = JSON.parse(Buffer.concat(data).toString()) as { data: Result; error?: unknown; };
+								b(new APIError(`Non-204 No Content Response From API: ${res.statusCode!} ${res.statusMessage!}`, v.error, res.statusCode!));
+							} else return a();
 						});
 				})
 				.end();
@@ -258,6 +272,7 @@ export class YiffRocks {
 
 	/**
 	 * Edit an existing short url.
+	 *
 	 * @param {string} code - The code of the short url to edit.
 	 * @param {string} managementCode - The management code for the short url. This is returned when the short url is created.
 	 * @param {object} update - The data to update
@@ -290,14 +305,14 @@ export class YiffRocks {
 						"Authorization": managementCode
 					}
 				}, (res) => {
-					const data: Buffer[] = [];
+					const data: Array<Buffer> = [];
 
 					res
 						.on("error", (err) => b(err))
 						.on("data", (d) => data.push(d))
 						.on("end", () => {
-							const v = JSON.parse(Buffer.concat(data).toString());
-							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode} ${res.statusMessage}`, v.error, res.statusCode!));
+							const v = JSON.parse(Buffer.concat(data).toString()) as { data: Result; error?: unknown; };
+							if (res.statusCode !== 200) b(new APIError(`Non-200 OK Response From API: ${res.statusCode!} ${res.statusMessage!}`, v.error, res.statusCode!));
 							else return a(new ShortURL(v.data));
 						});
 				});
@@ -311,5 +326,7 @@ export default YiffRocks;
 
 // For JavaScript Stuff
 module.exports = YiffRocks;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 module.exports.YiffRocks = YiffRocks;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 module.exports.APIError = APIError;

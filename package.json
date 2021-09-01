@@ -1,16 +1,16 @@
 {
   "name": "yiff-rocks",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A module for the yiff.rocks url shortener.",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "scripts": {
-    "prepare": "rm -rf build && tsc && echo Build Finished",
-    "build": "npm run prepare"
+    "prepublishOnly": "npm run build",
+    "build": "rm -rf build && tsc && echo Build Finished"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FurryBotCo/Yiff-Rocks.git"
+    "url": "git+https://github.com/DonovanDMC/Yiff-Rocks.git"
   },
   "keywords": [
     "yiff",
@@ -21,17 +21,21 @@
     "shortener",
     "url-shortener"
   ],
-  "author": "Donovan_DMC <dwddaniels262@gmail.com> (https://furry.cool)",
+  "author": "Donovan_DMC <hewwo@yiff.rocks> (https://furry.cool)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FurryBotCo/Yiff-Rocks/issues"
+    "url": "https://github.com/DonovanDMC/Yiff-Rocks/issues"
   },
-  "homepage": "https://github.com/FurryBotCo/Yiff-Rocks#readme",
+  "homepage": "https://github.com/DonovanDMC/Yiff-Rocks#readme",
   "devDependencies": {
-    "@types/node": "^14.14.22"
+    "@types/node": "^16.7.10",
+    "@uwu-codes/eslint-config": "^1.0.20",
+    "@uwu-codes/tsconfig": "^1.0.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   },
   "dependencies": {
-    "commander": "^7.1.0"
+    "commander": "^8.1.0"
   },
   "bin": {
     "shorten": "build/src/cli/main.js"
