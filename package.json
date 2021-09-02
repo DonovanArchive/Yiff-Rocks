@@ -1,6 +1,6 @@
 {
   "name": "yiff-rocks",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A module for the yiff.rocks url shortener.",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",

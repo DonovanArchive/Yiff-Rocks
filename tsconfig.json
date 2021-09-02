@@ -6,32 +6,7 @@
 		"strictPropertyInitialization": false,
 		"skipLibCheck": true,
 		"inlineSourceMap": true,
-		"paths": {
-			"@root/*": [
-				"../*"
-			],
-			"@config": [
-				"config/index.ts"
-			],
-			"@config/*": [
-				"config/*"
-			],
-			"@util/*": [
-				"util/*"
-			],
-			"@cmd/*": [
-				"util/cmd/*"
-			],
-			"@db": [
-				"db/index.ts"
-			],
-			"@db/*": [
-				"db/*"
-			],
-			"@MaidBoye": [
-				"main.ts"
-			]
-		}
+		"declaration": true
 	},
 	"include": [
 		"**/*"
